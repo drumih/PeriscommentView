@@ -19,7 +19,7 @@ class ColorGenerator {
     let orange = UIColor(red: 1.0, green: 0.60, blue: 0, alpha: 0.7)
     
     func pick() -> UIColor {
-        let colors = [red, pink, purple, blue, green, yellow, orange]
+        let colors = [blue]//FIXME: associate color and name
         let index = arc4random_uniform(UInt32(colors.count))
         return colors[Int(index)]
     }
@@ -28,8 +28,8 @@ class ColorGenerator {
 
 struct PeriscommentConfig {
     let layout: PeriscommentLayout
-    let commentFont = PeriscommentFont(font: UIFont.systemFontOfSize(14.0), color: UIColor.blackColor())
-    let nameFont = PeriscommentFont(font: UIFont.systemFontOfSize(12.0), color: UIColor.lightGrayColor())
+    let commentFont = PeriscommentFont(font: UIFont.systemFont(ofSize: 14.0), color: UIColor.black)
+    let nameFont = PeriscommentFont(font: UIFont.systemFont(ofSize: 12.0), color: UIColor.lightGray)
     let disappearDuration = 6.0
     let appearDuration = 1.0
     init() {
@@ -45,7 +45,7 @@ struct PeriscommentLayout {
     let maximumWidth: CGFloat = 200.0
     let markWidth: CGFloat = 40.0
     let allowLineBreak = true
-    let backgroundColor = UIColor.clearColor()
+    let backgroundColor = UIColor.clear
     init() {
         
     }
@@ -69,14 +69,14 @@ class CommentLabel : UILabel {
         self.textColor = font.color
         self.font = font.font
     }
-
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func sizeToFit() {
         if allowLineBreak {
-            self.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            self.lineBreakMode = NSLineBreakMode.byWordWrapping
             self.numberOfLines = 0
         }
         super.sizeToFit()

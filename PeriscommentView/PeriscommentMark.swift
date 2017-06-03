@@ -9,29 +9,29 @@
 import UIKit
 
 @IBDesignable class PeriscommentMark : UIView {
-
+    
     @IBInspectable let color: UIColor = ColorGenerator().pick()
     @IBInspectable var imageView: UIImageView?
     
     init(frame: CGRect, image: UIImage) {
         super.init(frame: frame)
-        setupView(image)
+        setupView(image: image)
     }
     
     private func setupView(image: UIImage) {
         imageView = UIImageView(image: image)
         imageView!.frame = self.frame
-        imageView!.contentMode = UIViewContentMode.ScaleAspectFit
+        imageView!.contentMode = UIViewContentMode.scaleAspectFit
         self.addSubview(imageView!)
         
         let colorView = UIView(frame: self.frame)
         colorView.backgroundColor = self.color
         self.addSubview(colorView)
     }
-
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }
 

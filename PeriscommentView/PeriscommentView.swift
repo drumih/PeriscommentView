@@ -17,8 +17,8 @@ public class PeriscommentView: UIView {
         let config = PeriscommentConfig()
         self.init(frame: frame, config: config)
     }
-
-    required public init(coder aDecoder: NSCoder) {
+    
+    required public init?(coder aDecoder: NSCoder) {
         self.config = PeriscommentConfig()
         super.init(coder: aDecoder)
     }
@@ -28,8 +28,8 @@ public class PeriscommentView: UIView {
         super.init(frame: frame)
     }
     
-    override public func willMoveToSuperview(newSuperview: UIView?) {
-        super.willMoveToSuperview(newSuperview)
+    override public func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
         setupView()
     }
     
@@ -37,34 +37,34 @@ public class PeriscommentView: UIView {
         self.backgroundColor = config.layout.backgroundColor
     }
     
-    public func addCell(cell: PeriscommentCell) {
+    public func addCell(_ cell: PeriscommentCell) {
         cell.frame = CGRect(origin: CGPoint(x: 0, y: self.frame.height), size: cell.frame.size)
         visibleCells.append(cell)
         self.addSubview(cell)
         
-        UIView.animateWithDuration(self.config.appearDuration, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: self.config.appearDuration, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
             let dy = cell.frame.height + self.config.layout.cellSpace
             for c in self.visibleCells {
                 let origin = c.transform
-                let transform = CGAffineTransformMakeTranslation(0, -dy)
-                c.transform = CGAffineTransformConcat(origin, transform)
+                let transform = CGAffineTransform(translationX: 0, y: -dy)
+                c.transform = origin.concatenating(transform)
             }
         }, completion: nil)
         
-        UIView.animateWithDuration(self.config.disappearDuration, delay: self.config.appearDuration, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: self.config.disappearDuration, delay: self.config.appearDuration, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
             cell.alpha = 0.0
         }) { (Bool) -> Void in
             cell.removeFromSuperview()
-            self.visibleCells.removeAtIndex(self.visibleCells.indexOf(cell)!)
+            self.visibleCells.removeLast()
         }
     }
     
     public func addCell(profileImage: UIImage, name: String, comment: String) {
-        let rect = CGRect.zeroRect
+        let rect = CGRect.zero
         let cell = PeriscommentCell(frame: rect, profileImage: profileImage, name: name, comment: comment, config: self.config)
-
+        
         self.addCell(cell)
     }
-
+    
 }
 
